@@ -58,10 +58,10 @@ public class AuthController {
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequestDTO loginRequest) throws BusinessException {
 
         try {
-            //String decryptedPassword = decrypt(loginRequest.getPassword(), key);
+            String decryptedPassword = decrypt(loginRequest.getPassword(), key);
 
             Authentication authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), decryptedPassword));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 

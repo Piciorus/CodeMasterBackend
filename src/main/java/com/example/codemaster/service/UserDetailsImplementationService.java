@@ -1,5 +1,6 @@
 package com.example.codemaster.service;
 
+import com.example.codemaster.model.DTO.RegisterRequestDTO;
 import com.example.codemaster.model.User;
 import com.example.codemaster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
