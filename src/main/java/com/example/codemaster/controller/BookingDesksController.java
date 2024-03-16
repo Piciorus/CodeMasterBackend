@@ -1,17 +1,21 @@
 package com.example.codemaster.controller;
 
 import com.example.codemaster.model.BookingDesk;
+import com.example.codemaster.model.DTO.HistoryResponseDTO;
 import com.example.codemaster.service.BookingDeskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class BookingDesksController {
+
     @Autowired
     private BookingDeskService bookingDeskService;
 
@@ -55,6 +59,34 @@ public class BookingDesksController {
     public ResponseEntity<Optional<BookingDesk>> getBookingDesksById(@PathVariable("id") String id) {
         Optional<BookingDesk> desks = bookingDeskService.getBookingDeskById(id);
         return new ResponseEntity<>(desks, HttpStatus.OK);
+    }
+
+    @GetMapping("/booking")
+    public ResponseEntity<List<HistoryResponseDTO>> getAllBookings() {
+        List<BookingDesk> allBookings = bookingDeskService.getAllBookingDesks();
+        List<HistoryResponseDTO> allHistories = allBookings.stream()
+                .map(bookingDesk -> new HistoryResponseDTO(
+                        bookingDesk.getUser().getUsername(),
+                        bookingDesk.getDesk().getId(),
+                        bookingDesk.getStartBookingTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                        bookingDesk.getEndBookingTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                ))
+                .toList();
+        return new ResponseEntity<>(allHistories, HttpStatus.OK);
+    }
+
+    @GetMapping("/booking/username/{username}")
+    public ResponseEntity<List<HistoryResponseDTO>> getBookingDeskByUserUsername(@PathVariable("username") String username) {
+        List<BookingDesk> bookingsByUserUsername = bookingDeskService.findByUserUsername(username);
+        List<HistoryResponseDTO> historiesByUserUsername = bookingsByUserUsername.stream()
+                .map(bookingDesk -> new HistoryResponseDTO(
+                        bookingDesk.getUser().getUsername(),
+                        bookingDesk.getDesk().getId(),
+                        bookingDesk.getStartBookingTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                        bookingDesk.getEndBookingTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                ))
+                .toList();
+        return new ResponseEntity<>(historiesByUserUsername, HttpStatus.OK);
     }
 
 }

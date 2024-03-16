@@ -29,5 +29,7 @@ public class BookingDesk {
 
     private Long available;
 
-    private LocalDateTime bookingTime;
+    private LocalDateTime startBookingTime;
+    private LocalDateTime endBookingTime;
+
 }

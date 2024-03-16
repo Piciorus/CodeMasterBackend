@@ -13,6 +13,10 @@ public class BookingDeskService {
     @Autowired
     private BookingDeskRepository bookingDeskRepository;
 
+    public List<BookingDesk> getAllBookingDesks() {
+        return bookingDeskRepository.findAll();
+    }
+
     public List<BookingDesk> getBookingDeskByLeft() {
         return bookingDeskRepository.findBookingDeskByLeft();
     }
@@ -37,7 +41,7 @@ public class BookingDeskService {
         BookingDesk bookingDesk = bookingDeskRepository.findByDeskId(id)
                 .orElseThrow(() -> new IllegalArgumentException("BookingDesk with id " + id + " does not exist."));
 
-        bookingDesk.setBookingTime(updatedBookingDesk.getBookingTime());
+        bookingDesk.setStartBookingTime(updatedBookingDesk.getStartBookingTime());
         bookingDesk.setUser(updatedBookingDesk.getUser());
 
         return bookingDeskRepository.save(bookingDesk);
@@ -45,5 +49,9 @@ public class BookingDeskService {
 
     public Optional<BookingDesk> getBookingDeskById(String id) {
         return bookingDeskRepository.findByDeskId(id);
+    }
+
+    public List<BookingDesk> findByUserUsername(String username) {
+        return bookingDeskRepository.findByUserUsername(username);
     }
 }
