@@ -34,4 +34,13 @@ public class BookingDeskService {
         return bookingDeskRepository.findBookingDeskByBottom();
     }
 
+    public BookingDesk updateBookingDesk(String id, BookingDesk updatedBookingDesk) {
+        BookingDesk bookingDesk = bookingDeskRepository.findByDeskId(id)
+                .orElseThrow(() -> new IllegalArgumentException("BookingDesk with id " + id + " does not exist."));
+
+        bookingDesk.setBookingTime(updatedBookingDesk.getBookingTime());
+        bookingDesk.setUser(updatedBookingDesk.getUser());
+
+        return bookingDeskRepository.save(bookingDesk);
+    }
 }

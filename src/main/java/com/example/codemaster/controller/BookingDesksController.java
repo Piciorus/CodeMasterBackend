@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/booking")
 public class BookingDesksController {
     @Autowired
     private BookingDeskService bookingDeskService;
@@ -43,5 +42,11 @@ public class BookingDesksController {
     public ResponseEntity<List<BookingDesk>> getBookingDesksByBottom() {
         List<BookingDesk> desks = bookingDeskService.getBookingDesksByBottom();
         return new ResponseEntity<>(desks, HttpStatus.OK);
+    }
+
+    @PutMapping("/booking/{id}")
+    public ResponseEntity<BookingDesk> updateBookingDesk(@PathVariable("id") String id, @RequestBody BookingDesk updatedBookingDesk) {
+        BookingDesk bookingDesk = bookingDeskService.updateBookingDesk(id, updatedBookingDesk);
+        return new ResponseEntity<>(bookingDesk, HttpStatus.OK);
     }
 }
