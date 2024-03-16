@@ -1,12 +1,14 @@
 package com.example.codemaster.controller;
 
+import com.example.codemaster.model.DTO.AIDeskRequestDTO;
 import com.example.codemaster.model.Desk;
 import com.example.codemaster.service.DeskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -15,10 +17,22 @@ public class DeskController {
     @Autowired
     private DeskService deskService;
 
+    @Autowired
+    RestTemplate restTemplate;
+
     @GetMapping("/desks/left")
     public ResponseEntity<List<Desk>> getDesksInRange() {
         List<Desk> desks = deskService.getDesksByLeft();
         return new ResponseEntity<>(desks, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/desk-prediction")
+    public String getProductList(@RequestBody AIDeskRequestDTO aiDeskRequestDTO) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        HttpEntity<AIDeskRequestDTO> entity = new HttpEntity<>(aiDeskRequestDTO, headers);
+
+        return restTemplate.exchange("http://localhost:5000/desk-prediction", HttpMethod.POST, entity, String.class).getBody();
     }
 
 }
