@@ -46,7 +46,7 @@ public class WebSecurityConfig {
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
                 }))
-                .authorizeHttpRequests(request -> request.requestMatchers("/auth/**","/user/register")
+                .authorizeHttpRequests(request -> request.requestMatchers("/auth/**","/user/register","/api/v1/auth/**", "/v3/api-docs/**", "/swagger-ui/**")
                         .permitAll().anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

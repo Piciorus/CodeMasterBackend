@@ -38,6 +38,9 @@ public class User implements Principal{
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private Set<BookingDesk> userDesks = new HashSet<>();
+
     @Override
     public String getName() {
         return null;
