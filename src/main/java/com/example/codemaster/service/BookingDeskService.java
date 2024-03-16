@@ -1,13 +1,12 @@
 package com.example.codemaster.service;
 
 import com.example.codemaster.model.BookingDesk;
-import com.example.codemaster.model.Desk;
 import com.example.codemaster.repository.BookingDeskRepository;
-import com.example.codemaster.repository.DeskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingDeskService {
@@ -42,5 +41,9 @@ public class BookingDeskService {
         bookingDesk.setUser(updatedBookingDesk.getUser());
 
         return bookingDeskRepository.save(bookingDesk);
+    }
+
+    public Optional<BookingDesk> getBookingDeskById(String id) {
+        return bookingDeskRepository.findByDeskId(id);
     }
 }

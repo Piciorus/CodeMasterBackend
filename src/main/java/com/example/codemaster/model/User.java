@@ -31,6 +31,7 @@ public class User implements Principal{
     private String username;
     private String email;
     private String password;
+    private boolean firstLogin;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(	name = "user_role",

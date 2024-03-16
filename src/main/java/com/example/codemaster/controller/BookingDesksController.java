@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BookingDesksController {
@@ -49,4 +50,11 @@ public class BookingDesksController {
         BookingDesk bookingDesk = bookingDeskService.updateBookingDesk(id, updatedBookingDesk);
         return new ResponseEntity<>(bookingDesk, HttpStatus.OK);
     }
+
+    @GetMapping("/booking/{id}")
+    public ResponseEntity<Optional<BookingDesk>> getBookingDesksById(@PathVariable("id") String id) {
+        Optional<BookingDesk> desks = bookingDeskService.getBookingDeskById(id);
+        return new ResponseEntity<>(desks, HttpStatus.OK);
+    }
+
 }
