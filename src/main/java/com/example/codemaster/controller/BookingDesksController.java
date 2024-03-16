@@ -1,6 +1,7 @@
 package com.example.codemaster.controller;
 
 import com.example.codemaster.model.BookingDesk;
+import com.example.codemaster.model.DTO.BookingDeskDateRequest;
 import com.example.codemaster.model.DTO.HistoryResponseDTO;
 import com.example.codemaster.service.BookingDeskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -55,9 +60,13 @@ public class BookingDesksController {
         return new ResponseEntity<>(bookingDesk, HttpStatus.OK);
     }
 
-    @GetMapping("/booking/{id}")
-    public ResponseEntity<Optional<BookingDesk>> getBookingDesksById(@PathVariable("id") String id) {
-        Optional<BookingDesk> desks = bookingDeskService.getBookingDeskById(id);
+    @PostMapping("/booking/{id}")
+        public ResponseEntity<Integer> getBookingDesksById(@PathVariable("id") String id, @RequestBody BookingDeskDateRequest bookingDeskDateRequest) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDate = LocalDateTime.parse(bookingDeskDateRequest.getStart_date());
+        LocalDateTime endDate = LocalDateTime.parse(bookingDeskDateRequest.getEnd_date());
+
+        Integer desks = bookingDeskService.getBookingDeskById(id,startDate, endDate);
         return new ResponseEntity<>(desks, HttpStatus.OK);
     }
 

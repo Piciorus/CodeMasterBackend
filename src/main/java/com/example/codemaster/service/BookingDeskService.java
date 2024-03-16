@@ -3,8 +3,11 @@ package com.example.codemaster.service;
 import com.example.codemaster.model.BookingDesk;
 import com.example.codemaster.repository.BookingDeskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +41,7 @@ public class BookingDeskService {
     }
 
     public BookingDesk updateBookingDesk(String id, BookingDesk updatedBookingDesk) {
-        BookingDesk bookingDesk = bookingDeskRepository.findByDeskId(id)
+        BookingDesk bookingDesk = bookingDeskRepository.findByDeskIdUnique(id)
                 .orElseThrow(() -> new IllegalArgumentException("BookingDesk with id " + id + " does not exist."));
 
         bookingDesk.setStartBookingTime(updatedBookingDesk.getStartBookingTime());
@@ -47,8 +50,16 @@ public class BookingDeskService {
         return bookingDeskRepository.save(bookingDesk);
     }
 
-    public Optional<BookingDesk> getBookingDeskById(String id) {
-        return bookingDeskRepository.findByDeskId(id);
+    public Integer getBookingDeskById(String id, LocalDateTime startTime, LocalDateTime endTime) {
+        List<BookingDesk> bookingDesks = bookingDeskRepository.findByDeskId(id, startTime, endTime);
+        if(bookingDesks.isEmpty()){
+            return 0;
+        }
+        else if(bookingDesks.size()<10){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 
     public List<BookingDesk> findByUserUsername(String username) {

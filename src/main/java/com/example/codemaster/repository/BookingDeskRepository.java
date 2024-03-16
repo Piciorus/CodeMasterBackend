@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +32,11 @@ public interface BookingDeskRepository extends JpaRepository<BookingDesk, String
             "WHERE d.desk.id LIKE '24.%' OR d.desk.id LIKE '25.%' OR d.desk.id LIKE '26.%' OR d.desk.id LIKE '27.%' OR d.desk.id LIKE '28.%' OR d.desk.id LIKE '29.%' OR d.desk.id LIKE '30.%' OR d.desk.id LIKE '31.%' OR d.desk.id LIKE '32.%' OR d.desk.id LIKE '33.%'")
     List<BookingDesk> findBookingDeskByBottom();
 
+    @Query("SELECT bd FROM BookingDesk bd WHERE bd.desk.id = :deskId and bd.startBookingTime between :startTime and :endTime" )
+    List<BookingDesk> findByDeskId(String deskId, LocalDateTime startTime, LocalDateTime endTime);
+
     @Query("SELECT bd FROM BookingDesk bd WHERE bd.desk.id = :deskId")
-    Optional<BookingDesk> findByDeskId(String deskId);
+    Optional<BookingDesk> findByDeskIdUnique(String deskId);
 
     @Query("SELECT bd FROM BookingDesk bd WHERE bd.user.username = :username")
     List<BookingDesk> findByUserUsername(String username);
