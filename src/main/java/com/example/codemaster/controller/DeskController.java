@@ -26,6 +26,12 @@ public class DeskController {
         return new ResponseEntity<>(desks, HttpStatus.OK);
     }
 
+    @GetMapping("/desks/roomCapacity/{id}")
+        public ResponseEntity<Long> getRoomCapacity(@PathVariable("id") String id) {
+        Long cap = deskService.getRoomCapacity(id);
+        return new ResponseEntity<Long>(cap, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/desk-prediction")
     public String getProductList(@RequestBody AIDeskRequestDTO aiDeskRequestDTO) {
         HttpHeaders headers = new HttpHeaders();
