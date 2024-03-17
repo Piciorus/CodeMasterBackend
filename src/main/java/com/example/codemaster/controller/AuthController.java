@@ -5,19 +5,12 @@ import com.example.codemaster.exception.BusinessException;
 import com.example.codemaster.exception.BusinessExceptionCode;
 import com.example.codemaster.model.DTO.LoginRequestDTO;
 import com.example.codemaster.model.DTO.RefreshTokenResponseDTO;
-import com.example.codemaster.model.DTO.RegisterRequestDTO;
 import com.example.codemaster.model.DTO.SignInResponseDTO;
-import com.example.codemaster.model.ERole;
-import com.example.codemaster.model.Role;
-import com.example.codemaster.model.User;
-import com.example.codemaster.repository.RoleRepository;
-import com.example.codemaster.repository.UserRepository;
 import com.example.codemaster.service.RefreshTokenService;
 import com.example.codemaster.service.UserDetailsImplementation;
 import com.example.codemaster.service.UserDetailsImplementationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +22,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.Cipher;
@@ -37,7 +29,10 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")

@@ -1,7 +1,6 @@
 package com.example.codemaster.controller;
 
 import com.example.codemaster.model.DTO.AIDeskRequestDTO;
-import com.example.codemaster.model.DTO.LocalDateDTO;
 import com.example.codemaster.model.Desk;
 import com.example.codemaster.service.BookingDeskService;
 import com.example.codemaster.service.DeskService;
@@ -10,9 +9,6 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -34,7 +30,7 @@ public class DeskController {
     }
 
     @GetMapping("/desks/roomCapacity/{id}")
-        public ResponseEntity<Long> getRoomCapacity(@PathVariable("id") String id) {
+    public ResponseEntity<Long> getRoomCapacity(@PathVariable("id") String id) {
         Long cap = deskService.getRoomCapacity(id);
         return new ResponseEntity<Long>(cap, HttpStatus.OK);
     }

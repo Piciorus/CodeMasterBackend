@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class DeskService {
-
     @Autowired
     private DeskRepository deskRepository;
 
@@ -17,7 +16,7 @@ public class DeskService {
         return deskRepository.findLeftDesks();
     }
 
-    public Long getRoomCapacity(String id){
+    public Long getRoomCapacity(String id) {
         return this.deskRepository.getRoomCapacity(id);
     }
 }

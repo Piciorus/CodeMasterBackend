@@ -10,14 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class BookingDesksController {
@@ -62,12 +57,12 @@ public class BookingDesksController {
     }
 
     @PostMapping("/booking/{id}")
-        public ResponseEntity<Integer> getBookingDesksById(@PathVariable("id") String id, @RequestBody BookingDeskDateRequest bookingDeskDateRequest) {
+    public ResponseEntity<Integer> getBookingDesksById(@PathVariable("id") String id, @RequestBody BookingDeskDateRequest bookingDeskDateRequest) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime startDate = LocalDateTime.parse(bookingDeskDateRequest.getStart_date());
         LocalDateTime endDate = LocalDateTime.parse(bookingDeskDateRequest.getEnd_date());
 
-        Integer desks = bookingDeskService.getBookingDeskById(id,startDate, endDate);
+        Integer desks = bookingDeskService.getBookingDeskById(id, startDate, endDate);
         return new ResponseEntity<>(desks, HttpStatus.OK);
     }
 
@@ -104,7 +99,7 @@ public class BookingDesksController {
         LocalDateTime startDate = LocalDateTime.parse(bookingDeskDateRequest.getStart_date());
         LocalDateTime endDate = LocalDateTime.parse(bookingDeskDateRequest.getEnd_date());
 
-        List<BookingDesk> desks = bookingDeskService.getAllBookingDesksByDate(id,startDate, endDate);
+        List<BookingDesk> desks = bookingDeskService.getAllBookingDesksByDate(id, startDate, endDate);
         return new ResponseEntity<>(desks, HttpStatus.OK);
     }
 

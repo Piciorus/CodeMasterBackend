@@ -27,7 +27,7 @@ public class UserDetailsImplementation implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImplementation(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                                     Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;

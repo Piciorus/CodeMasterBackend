@@ -8,13 +8,10 @@ import com.example.codemaster.repository.BookingDeskRepository;
 import com.example.codemaster.repository.DeskRepository;
 import com.example.codemaster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookingDeskService {
@@ -61,17 +58,16 @@ public class BookingDeskService {
 
     public Integer getBookingDeskById(String id, LocalDateTime startTime, LocalDateTime endTime) {
         List<BookingDesk> bookingDesks = bookingDeskRepository.findByDeskId(id, startTime, endTime);
-        if(bookingDesks.isEmpty()){
+        if (bookingDesks.isEmpty()) {
             return 0;
-        }
-        else if(bookingDesks.size()<10){
+        } else if (bookingDesks.size() < 10) {
             return 1;
-        }else{
+        } else {
             return 2;
         }
     }
 
-    public List<BookingDesk> getAllBookingDesksByDate(String id,LocalDateTime startTime,LocalDateTime endTime){
+    public List<BookingDesk> getAllBookingDesksByDate(String id, LocalDateTime startTime, LocalDateTime endTime) {
         List<BookingDesk> bookingDesks = bookingDeskRepository.findByDeskId(id, startTime, endTime);
         return bookingDesks;
     }
