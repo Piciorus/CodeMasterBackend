@@ -62,6 +62,11 @@ public class BookingDeskService {
         }
     }
 
+    public List<BookingDesk> getAllBookingDesksByDate(String id,LocalDateTime startTime,LocalDateTime endTime){
+        List<BookingDesk> bookingDesks = bookingDeskRepository.findByDeskId(id, startTime, endTime);
+        return bookingDesks;
+    }
+
     public List<BookingDesk> findByUserUsername(String username) {
         return bookingDeskRepository.findByUserUsername(username);
     }

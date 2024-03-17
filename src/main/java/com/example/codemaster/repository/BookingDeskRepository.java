@@ -40,4 +40,6 @@ public interface BookingDeskRepository extends JpaRepository<BookingDesk, String
 
     @Query("SELECT bd FROM BookingDesk bd WHERE bd.user.username = :username")
     List<BookingDesk> findByUserUsername(String username);
+
+
 }

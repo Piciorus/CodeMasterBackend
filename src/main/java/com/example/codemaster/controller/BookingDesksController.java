@@ -98,4 +98,13 @@ public class BookingDesksController {
         return new ResponseEntity<>(historiesByUserUsername, HttpStatus.OK);
     }
 
+    @PostMapping("/booking/day/{id}")
+    public ResponseEntity<List<BookingDesk>> getAllBookingDesksByDate(@PathVariable("id") String id, @RequestBody BookingDeskDateRequest bookingDeskDateRequest) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDate = LocalDateTime.parse(bookingDeskDateRequest.getStart_date());
+        LocalDateTime endDate = LocalDateTime.parse(bookingDeskDateRequest.getEnd_date());
+
+        List<BookingDesk> desks = bookingDeskService.getAllBookingDesksByDate(id,startDate, endDate);
+        return new ResponseEntity<>(desks, HttpStatus.OK);
+    }
 }
