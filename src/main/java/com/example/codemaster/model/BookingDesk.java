@@ -27,8 +27,6 @@ public class BookingDesk {
     @JoinColumn(name = "desk_id")
     private Desk desk;
 
-    private Long available;
-
     private LocalDateTime startBookingTime;
     private LocalDateTime endBookingTime;
 

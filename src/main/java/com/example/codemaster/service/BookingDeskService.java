@@ -1,7 +1,12 @@
 package com.example.codemaster.service;
 
 import com.example.codemaster.model.BookingDesk;
+import com.example.codemaster.model.DTO.AddBookingDeskDTO;
+import com.example.codemaster.model.Desk;
+import com.example.codemaster.model.User;
 import com.example.codemaster.repository.BookingDeskRepository;
+import com.example.codemaster.repository.DeskRepository;
+import com.example.codemaster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,10 @@ import java.util.Optional;
 public class BookingDeskService {
     @Autowired
     private BookingDeskRepository bookingDeskRepository;
+    @Autowired
+    private DeskRepository deskRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<BookingDesk> getAllBookingDesks() {
         return bookingDeskRepository.findAll();
@@ -69,5 +78,25 @@ public class BookingDeskService {
 
     public List<BookingDesk> findByUserUsername(String username) {
         return bookingDeskRepository.findByUserUsername(username);
+    }
+
+    public BookingDesk newBookingDesk(AddBookingDeskDTO addBookingDeskDTO) {
+        Desk desk = deskRepository.findById(addBookingDeskDTO.getDeskId())
+                .orElseThrow(() -> new IllegalArgumentException("Desk with id does not exist."));
+
+        User user = userRepository.findByUsername(addBookingDeskDTO.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("User with id does not exist."));
+
+        LocalDateTime startDate = LocalDateTime.parse(addBookingDeskDTO.getStart_date());
+        LocalDateTime endDate = LocalDateTime.parse(addBookingDeskDTO.getEnd_date());
+
+        BookingDesk bookingDeskToSave = BookingDesk.builder()
+                .desk(desk)
+                .user(user)
+                .startBookingTime(startDate)
+                .endBookingTime(endDate)
+                .build();
+
+        return bookingDeskRepository.save(bookingDeskToSave);
     }
 }
