@@ -1,6 +1,7 @@
 package com.example.codemaster.controller;
 
 import com.example.codemaster.model.BookingDesk;
+import com.example.codemaster.model.DTO.AddBookingDeskDTO;
 import com.example.codemaster.model.DTO.BookingDeskDateRequest;
 import com.example.codemaster.model.DTO.HistoryResponseDTO;
 import com.example.codemaster.service.BookingDeskService;
@@ -100,11 +101,15 @@ public class BookingDesksController {
 
     @PostMapping("/booking/day/{id}")
     public ResponseEntity<List<BookingDesk>> getAllBookingDesksByDate(@PathVariable("id") String id, @RequestBody BookingDeskDateRequest bookingDeskDateRequest) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime startDate = LocalDateTime.parse(bookingDeskDateRequest.getStart_date());
         LocalDateTime endDate = LocalDateTime.parse(bookingDeskDateRequest.getEnd_date());
 
         List<BookingDesk> desks = bookingDeskService.getAllBookingDesksByDate(id,startDate, endDate);
         return new ResponseEntity<>(desks, HttpStatus.OK);
+    }
+
+    @PostMapping("/createBooking")
+    public ResponseEntity<BookingDesk> createBookingDesk(@RequestBody AddBookingDeskDTO addBookingDeskDTO) {
+        return new ResponseEntity<>(this.bookingDeskService.newBookingDesk(addBookingDeskDTO), HttpStatus.OK);
     }
 }

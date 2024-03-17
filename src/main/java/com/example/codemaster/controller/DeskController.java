@@ -1,14 +1,18 @@
 package com.example.codemaster.controller;
 
 import com.example.codemaster.model.DTO.AIDeskRequestDTO;
+import com.example.codemaster.model.DTO.LocalDateDTO;
 import com.example.codemaster.model.Desk;
+import com.example.codemaster.service.BookingDeskService;
 import com.example.codemaster.service.DeskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -16,6 +20,9 @@ import java.util.List;
 public class DeskController {
     @Autowired
     private DeskService deskService;
+
+    @Autowired
+    private BookingDeskService bookingDeskService;
 
     @Autowired
     RestTemplate restTemplate;
