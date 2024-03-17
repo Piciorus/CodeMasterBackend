@@ -11,7 +11,7 @@ This is an application that allows employees to book desks and meeting rooms at 
 * `Typescript`
 * `HTML & SCSS`
 * `Spring Boot`
-* `SQL Server`
+* `MySQL`
 * `Java`
 * `Python`
 
