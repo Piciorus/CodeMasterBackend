@@ -9,7 +9,7 @@ This is an application that allows employees to book desks and meeting rooms at 
 ## 🖥️ Technologies
 * `Angular`
 * `Typescript`
-* `HTML & SCSS`
+* `HTML & CSS`
 * `Spring Boot`
 * `MySQL`
 * `Java`
